@@ -15,12 +15,12 @@ testManager::~testManager()
 
 bool testManager::addStrategy(pagingStrategy* s)
 {
-
+    return true;
 }
 
 bool testManager::readFile(char* name)
 {
-
+    return true;
 }
 
 void testManager::beginTest()

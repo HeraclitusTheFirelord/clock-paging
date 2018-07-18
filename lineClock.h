@@ -6,26 +6,41 @@
 class lineClock:public pagingStrategy
 {
 public:
-    lineClock(int _size):pagingStrategy(_size){}
-    ~lineClock(){}
-
-protected:
-    int findEviction()
+    lineClock(int _size):pagingStrategy(_size)
     {
-        int minPos=0;
-        unsigned int minTime=bufTime[0];
-        for(int i=1;i<size;i++)
-        {
-            if(minTime<bufTime[i])
-            {
-                minTime=bufTime[i];
-                minPos=i;
-            }
-        }
-        return minPos;
+        clock = new BYTE[_size];
+        memset(clock, 0, _size * sizeof(BYTE)); 
+    }
+    ~lineClock()
+    {
+        delete [] clock;
     }
 
+protected:
+    BYTE *clock;
 
+    int findEviction()
+    {
+        int i=0;
+        while(true)
+        {
+            if(clock[i]==1)
+            {
+                clock[i]=0;
+            }
+            else
+            {
+                clock[i]=1;
+                return i;
+            }
+            i=(i+1)%size;
+        }
+    }
+
+    void updatePosition(int pos)
+    {
+        clock[pos]=1;
+    }
 
 
 

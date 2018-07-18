@@ -25,10 +25,7 @@ protected:
         return minPos;
     }
 
-
-
-
-
+    void updatePosition(int pos){}
 };
 
 #endif

@@ -19,6 +19,7 @@ public:
             {
                 flag = true;
                 bufTime[i] = currentTime++;
+                updatePosition(i);
                 break;
             }
         }
@@ -26,30 +27,23 @@ public:
         if(!flag)
         {
             miss++;
-            int evictPos;
+            int insertPos;
             if(notValidPos!=-1)
-                evictPos=notValidPos;
+            {
+                insertPos=notValidPos;
+                valid[insertPos]=true;
+            }
             else
             {
-                evictPos = findEviction();
-                LRUCount = getLRUCount(evictPos);
+                insertPos = findEviction();
+                LRUCount = getLRUCount(insertPos);
                 lruCount[LRUCount]++;
             }
-            buf[evictPos] = key;
-            bufTime[evictPos] = currentTime++;
+            buf[insertPos] = key;
+            bufTime[insertPos] = currentTime++;
         }
         return LRUCount;
     }
-
-    void reset()
-    {
-        memset(buf, 0, size * sizeof(int));
-        memset(valid, 0, size * sizeof(bool));
-        currentTime = 0;
-        memset(bufTime, 0, size * sizeof(unsigned int));
-        query = miss = 0;
-        memset(lruCount, 0, size * sizeof(int));
-    }   
 
     pagingStrategy(int _size)
     {
@@ -97,6 +91,7 @@ protected:
     }
 
     virtual int findEviction() = 0;
+    virtual void updatePosition(int pos) = 0;
 };
 
 
