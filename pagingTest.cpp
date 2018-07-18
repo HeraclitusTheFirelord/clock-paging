@@ -1,9 +1,39 @@
 #include "pagingTest.h"
 
+testManager::testManager():
+strategySize(0)
+{}
 
-
-
-int testManager::b()
+testManager::~testManager()
 {
-    return 1;
+    for(auto it=strategyList.begin();it!=strategyList.end();it++)
+    {
+        pagingStrategy*s = *it;
+        delete s;
+    }
 }
+
+bool testManager::addStrategy(pagingStrategy* s)
+{
+
+}
+
+bool testManager::readFile(char* name)
+{
+
+}
+
+void testManager::beginTest()
+{
+
+}
+
+
+
+
+
+
+
+
+
+

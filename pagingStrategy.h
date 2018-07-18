@@ -33,7 +33,8 @@ public:
             {
                 evictPos = findEviction();
                 LRUCount = getLRUCount(evictPos);
-                }
+                lruCount[LRUCount]++;
+            }
             buf[evictPos] = key;
             bufTime[evictPos] = currentTime++;
         }
@@ -45,8 +46,9 @@ public:
         memset(buf, 0, size * sizeof(int));
         memset(valid, 0, size * sizeof(bool));
         currentTime = 0;
-        memset(buf, 0, size * sizeof(unsigned int));
+        memset(bufTime, 0, size * sizeof(unsigned int));
         query = miss = 0;
+        memset(lruCount, 0, size * sizeof(int));
     }   
 
     pagingStrategy(int _size)
@@ -58,14 +60,17 @@ public:
         memset(valid, 0, size * sizeof(bool));
         currentTime = 0;
         bufTime = new unsigned int[size];
-        memset(buf, 0, size * sizeof(unsigned int));
+        memset(bufTime, 0, size * sizeof(unsigned int));
         query = miss = 0;
+        lruCount = new int[size];
+        memset(lruCount, 0, size * sizeof(int));
     }
 
-    ~pagingStrategy()
+    virtual ~pagingStrategy()
     {
         delete [] buf;
         delete [] bufTime;
+        delete [] lruCount;
     }
 
 protected:
@@ -76,6 +81,7 @@ protected:
     unsigned int *bufTime;
     int query;
     int miss;
+    int *lruCount;
 
     int getLRUCount(int pos)
     {
