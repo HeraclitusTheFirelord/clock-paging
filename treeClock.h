@@ -24,6 +24,8 @@ public:
         myClock = new BYTE[clockLen];
         memset(myClock, 0, clockLen * sizeof(BYTE));
         offset = _size / (childNum-1);
+        pointerTree = new int[offset];
+        memset(pointerTree, 0, offset * sizeof(int));
         strategyName = string("tree(") +
             to_string(childNum) + string(") clock");
     }
@@ -31,6 +33,7 @@ public:
     ~treeClock()
     {
         delete [] myClock;
+        delete [] pointerTree;
     }
 
 protected:
@@ -38,19 +41,22 @@ protected:
     BYTE *myClock;
     int clockLen;
     int offset;
+    int *pointerTree;
 
     int findEviction()
     {
         int k=0;
         while(true)
         {
-            int start=childNum*k+1, end=childNum*k+childNum;
-            for(int t=start;t<=end;t++)
+            int starts=childNum*k+1+pointerTree[k];
+            int ends=childNum*k+childNum;
+            for(int t=starts;t<=ends;t++)
             {
+                pointerTree[k]=(pointerTree[k]+1)/childNum;
                 assert(t>=0 && t<clockLen);
                 if(myClock[t]==0)
                 {
-                    if(start>=offset)
+                    if(starts>=offset)
                     {
                         int pos = t - offset;
                         assert(pos>=0 && pos<size);

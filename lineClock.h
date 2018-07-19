@@ -14,6 +14,7 @@ public:
     {
         myClock = new BYTE[_size];
         memset(myClock, 0, _size * sizeof(BYTE)); 
+        pointer=0;
         strategyName="line clock";
     }
     ~lineClock()
@@ -23,22 +24,23 @@ public:
 
 protected:
     BYTE *myClock;
+    int pointer;
 
     int findEviction()
     {
-        int i=0;
         while(true)
         {
-            if(myClock[i]==1)
+            int t=pointer;
+            pointer=(pointer+1)%size;
+            if(myClock[t]==1)
             {
-                myClock[i]=0;
+                myClock[t]=0;
             }
             else
             {
-                myClock[i]=1;
-                return i;
+                myClock[t]=1;
+                return t;
             }
-            i=(i+1)%size;
         }
     }
 

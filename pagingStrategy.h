@@ -72,15 +72,18 @@ public:
         delete [] lruCount;
     }
 
-    void log()
+    void log(bool showDetail=false)
     {
         cout<<"*******************"<<endl;
         cout<<strategyName<<" behavior:"<<endl;
         cout<<"query: "<<query<<", miss: "<<miss<<endl;
-        int span=size;//int span = 512<size?512:size;
-        for(int i=0;i<span;i++)
-            cout<<lruCount[i]<<" ";
-        cout<<endl;
+        if(showDetail)
+        {
+            int span=size;//int span = 512<size?512:size;
+            for(int i=0;i<span;i++)
+                cout<<lruCount[i]<<" ";
+            cout<<endl;
+        }
     }
 protected:
     int size;
