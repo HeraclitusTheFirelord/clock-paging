@@ -43,11 +43,11 @@ void testManager::beginTest(int updateNum)
     }
 }
 
-void testManager::log()
+void testManager::log(bool showDetail=false)
 {
     for(auto it=strategyList.begin();it!=strategyList.end();it++)
     {
-        (*it)->log();
+        (*it)->log(showDetail);
     }
 }
 

@@ -27,7 +27,7 @@ public:
     
     void beginTest(int updateNum);
 
-    void log();
+    void log(bool showDetail);
 };
 
 

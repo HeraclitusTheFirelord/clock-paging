@@ -11,14 +11,14 @@ int main(int argc, char ** argv)
     */
 
     testManager m;
-#if 0     
+#if 1 
     m.addStrategy(new lru(64));
     m.addStrategy(new lineClock(64));
     m.addStrategy(new treeClock(64,4));
 
     m.beginTest(10000);
 #endif
-#if 1
+#if 0
     m.addStrategy(new lru(4096));
     m.addStrategy(new lineClock(4096));
     m.addStrategy(new treeClock(4096,2));
@@ -28,7 +28,7 @@ int main(int argc, char ** argv)
   
     m.beginTest(200000);
 #endif
-    m.log();
+    m.log(true);
 
     return 0;
 }
