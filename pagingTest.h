@@ -5,25 +5,29 @@
 #include "lineClock.h"
 #include "treeClock.h"
 
+using namespace std;
 #include <stdio.h>
 #include <vector>
+#include <fstream>
 
 class testManager
 {
 public:
     int strategySize;
-    std::vector<pagingStrategy*> strategyList;
+    vector<pagingStrategy*> strategyList;
+    ifstream fin;        
+    char readBuf[105];
 
     testManager();
     ~testManager();
 
     bool addStrategy(pagingStrategy* s);
 
-    bool readFile(char* name);
-
-    void beginTest();
-
+    int read(); 
     
+    void beginTest(int updateNum);
+
+    void log();
 };
 
 

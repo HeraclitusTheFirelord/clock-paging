@@ -1,36 +1,41 @@
-#ifndef __LRU_H__
-#define __LRU_H__
+#ifndef __LINE_CLOCK_H__
+#define __LINE_CLOCK_H__
 
 #include "pagingStrategy.h"
+
+#include <memory.h>
+
+typedef unsigned char BYTE;
 
 class lineClock:public pagingStrategy
 {
 public:
     lineClock(int _size):pagingStrategy(_size)
     {
-        clock = new BYTE[_size];
-        memset(clock, 0, _size * sizeof(BYTE)); 
+        myClock = new BYTE[_size];
+        memset(myClock, 0, _size * sizeof(BYTE)); 
+        strategyName="line clock";
     }
     ~lineClock()
     {
-        delete [] clock;
+        delete [] myClock;
     }
 
 protected:
-    BYTE *clock;
+    BYTE *myClock;
 
     int findEviction()
     {
         int i=0;
         while(true)
         {
-            if(clock[i]==1)
+            if(myClock[i]==1)
             {
-                clock[i]=0;
+                myClock[i]=0;
             }
             else
             {
-                clock[i]=1;
+                myClock[i]=1;
                 return i;
             }
             i=(i+1)%size;
@@ -39,7 +44,7 @@ protected:
 
     void updatePosition(int pos)
     {
-        clock[pos]=1;
+        myClock[pos]=1;
     }
 
 

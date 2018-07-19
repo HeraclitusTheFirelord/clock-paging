@@ -6,7 +6,10 @@
 class lru:public pagingStrategy
 {
 public:
-    lru(int _size):pagingStrategy(_size){}
+    lru(int _size):pagingStrategy(_size)
+    {
+        strategyName="lru";
+    }
     ~lru(){}
 
 protected:
@@ -16,7 +19,7 @@ protected:
         unsigned int minTime=bufTime[0];
         for(int i=1;i<size;i++)
         {
-            if(minTime<bufTime[i])
+            if(minTime>bufTime[i])
             {
                 minTime=bufTime[i];
                 minPos=i;

@@ -2,7 +2,9 @@
 
 testManager::testManager():
 strategySize(0)
-{}
+{
+    fin = ifstream("dat/0.dat",ios::in|ios::binary);
+}
 
 testManager::~testManager()
 {
@@ -15,20 +17,39 @@ testManager::~testManager()
 
 bool testManager::addStrategy(pagingStrategy* s)
 {
+    strategySize++;
+    strategyList.push_back(s);
     return true;
 }
 
-bool testManager::readFile(char* name)
+int testManager::read()
 {
-    return true;
+    fin.read(readBuf,13);
+    readBuf[4]='\0';
+    int tmp=0;
+    for(int i=0;i<4;i++)tmp=tmp*256+(int)readBuf[i];
+    return tmp;
 }
 
-void testManager::beginTest()
+void testManager::beginTest(int updateNum)
 {
-
+    while(updateNum--)
+    {
+        int n=read();
+        for(auto it=strategyList.begin();it!=strategyList.end();it++)
+        {
+            (*it)->update(n);
+        }
+    }
 }
 
-
+void testManager::log()
+{
+    for(auto it=strategyList.begin();it!=strategyList.end();it++)
+    {
+        (*it)->log();
+    }
+}
 
 
 

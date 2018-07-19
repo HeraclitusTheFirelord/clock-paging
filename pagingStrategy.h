@@ -1,13 +1,16 @@
 #ifndef __PAGING_STRATEGY_H__
 #define __PAGING_STRATEGY_H__
 
+using namespace std;
 #include <memory.h>
 #include <assert.h>
+#include <iostream>
+#include <string>
 
 class pagingStrategy
 {
 public:
-    int update(int key)   //return LRU position of evicted item, -1 if no item evicted
+    pagingStrategy&update(int key)   //return LRU position of evicted item, -1 if no item evicted
     {
         int LRUCount=-1;
         bool flag = false;
@@ -39,15 +42,17 @@ public:
                 LRUCount = getLRUCount(insertPos);
                 lruCount[LRUCount]++;
             }
+            //cout<<"evict:"<<buf[insertPos]<<" "<<key<<endl;
             buf[insertPos] = key;
             bufTime[insertPos] = currentTime++;
+            updatePosition(insertPos);
         }
-        return LRUCount;
+        return *this;
     }
 
     pagingStrategy(int _size)
     {
-        size = size;
+        size = _size;
         buf = new int[size];
         memset(buf, 0, size * sizeof(int));
         valid = new bool[size];
@@ -67,6 +72,16 @@ public:
         delete [] lruCount;
     }
 
+    void log()
+    {
+        cout<<"*******************"<<endl;
+        cout<<strategyName<<" behavior:"<<endl;
+        cout<<"query: "<<query<<", miss: "<<miss<<endl;
+        int span=size;//int span = 512<size?512:size;
+        for(int i=0;i<span;i++)
+            cout<<lruCount[i]<<" ";
+        cout<<endl;
+    }
 protected:
     int size;
     int *buf;
@@ -76,6 +91,7 @@ protected:
     int query;
     int miss;
     int *lruCount;
+    string strategyName;
 
     int getLRUCount(int pos)
     {
