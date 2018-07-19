@@ -44,7 +44,7 @@ protected:
         int k=0;
         while(true)
         {
-            int start=4*k+1, end=4*k+4;
+            int start=childNum*k+1, end=childNum*k+childNum;
             for(int t=start;t<=end;t++)
             {
                 assert(t>=0 && t<clockLen);
