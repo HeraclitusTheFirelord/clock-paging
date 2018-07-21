@@ -4,6 +4,7 @@
 #include "lru.h"
 #include "lineClock.h"
 #include "treeClock.h"
+#include "lruClock.h"
 
 using namespace std;
 #include <stdio.h>

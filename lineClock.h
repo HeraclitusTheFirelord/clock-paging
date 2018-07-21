@@ -13,7 +13,7 @@ public:
     lineClock(int _size):pagingStrategy(_size)
     {
         myClock = new BYTE[_size];
-        memset(myClock, 0, _size * sizeof(BYTE)); 
+        memset(myClock, 0, _size * sizeof(BYTE));
         pointer=0;
         strategyName="line clock";
     }
@@ -48,9 +48,6 @@ protected:
     {
         myClock[pos]=1;
     }
-
-
-
 };
 
 #endif
