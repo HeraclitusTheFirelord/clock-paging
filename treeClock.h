@@ -21,9 +21,13 @@ public:
         
         childNum = _childNum;
         clockLen = _size * childNum / (childNum-1);
+        if(childNum==2)
+            clockLen++;
         myClock = new BYTE[clockLen];
         memset(myClock, 0, clockLen * sizeof(BYTE));
         offset = _size / (childNum-1);
+        if(childNum==2)
+            offset--;
         pointerTree = new int[offset];
         memset(pointerTree, 0, offset * sizeof(int));
         strategyName = string("tree(") +
@@ -52,7 +56,7 @@ protected:
             int ends=childNum*k+childNum;
             for(int t=starts;t<=ends;t++)
             {
-                pointerTree[k]=(pointerTree[k]+1)/childNum;
+                pointerTree[k]=(pointerTree[k]+1)%childNum;
                 assert(t>=0 && t<clockLen);
                 if(myClock[t]==0)
                 {
@@ -82,7 +86,7 @@ protected:
         while(k>0)
         {
             myClock[k]=1;
-            k=(k-1)/4;
+            k=(k-1)/childNum;
         }
     }
 

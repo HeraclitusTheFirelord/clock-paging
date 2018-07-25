@@ -5,6 +5,7 @@
 #include "lineClock.h"
 #include "treeClock.h"
 #include "lruClock.h"
+#include "treeLru.h"
 
 using namespace std;
 #include <stdio.h>
