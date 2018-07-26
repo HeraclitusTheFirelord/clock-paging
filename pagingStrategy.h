@@ -68,6 +68,7 @@ public:
     virtual ~pagingStrategy()
     {
         delete [] buf;
+        delete [] valid;
         delete [] bufTime;
         delete [] lruCount;
     }
